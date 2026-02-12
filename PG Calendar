@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Lobby Display</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    
+    <style>
+        :root {
+            /* EDIT THESE TO YOUR BRAND COLORS */
+            --brand-primary: #0055FF;    /* Your main pop color */
+            --brand-bg: #0a0a0a;         /* Dark background for high contrast */
+            --text-main: #ffffff;
+            --accent-gradient: linear-gradient(90deg, #0055FF, #00D4FF);
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background-color: var(--brand-bg);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden; /* Prevent scrollbars on the monitor */
+            height: 100vh;
+        }
+
+        #calendar {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Styling the "Lively Pop" */
+        .fc-event {
+            background: var(--accent-gradient) !important;
+            border: none !important;
+            padding: 10px !important;
+            font-size: 1.2rem !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-bottom: 10px !important;
+        }
+
+        .fc-list-day-side-text, .fc-list-day-text {
+            font-size: 1.8rem !important;
+            color: var(--brand-primary) !important;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .fc-toolbar-title {
+            font-size: 3rem !important;
+            margin-bottom: 20px !important;
+        }
+
+        /* Hide the header/buttons for a clean "Display Only" look */
+        .fc-header-toolbar { margin-bottom: 3em !important; }
+        .fc-button { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="calendar"></div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'listWeek', // 'listWeek' is best for M-F schedules
+          headerToolbar: {
+            left: 'title',
+            center: '',
+            right: ''
+          },
+          // THIS IS WHERE YOUR DATA COMES FROM
+          events: [
+            { title: 'Morning Standup', start: '2023-10-27T09:00:00', end: '2023-10-27T10:00:00' },
+            { title: 'Project Launch', start: '2023-10-28T13:00:00' }
+            // To sync Google: googleCalendarId: 'your_email@gmail.com'
+          ],
+          height: 'auto',
+          eventTimeFormat: { hour: 'numeric', minute: '2-digit', meridian: 'short' }
+        });
+        calendar.render();
+      });
+    </script>
+</body>
+</html>
