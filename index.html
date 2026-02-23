@@ -2,106 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Proud Ground Lobby Display</title>
-    
+    <title>Proud Ground Lobby</title>
     <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.10/index.global.min.js"></script>
     
     <style>
         :root {
-            /* Exact Proud Ground Colors */
-            --pg-red: #BA2026;   /* Roof Red */
-            --pg-blue: #00B5F1;  /* House Blue */
-            --pg-green: #9EB327; /* Toned-down Sunray Green */
+            --pg-red: #BA2026;   
+            --pg-blue: #00B5F1;  
+            --pg-green: #9EB327; 
             --bg-dark: #121212;
         }
 
         body { 
-            background-color: var(--bg-dark); 
-            color: white; 
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            margin: 0; padding: 20px;
+            background-color: var(--bg-dark); color: white; 
+            font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px;
             display: flex; flex-direction: column; align-items: center;
-            height: 100vh; overflow: hidden;
         }
 
-        .brand-header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-top: 20px;
-        }
-
-        .brand-logo {
-            max-width: 450px;
-            height: auto;
+        .brand-header { text-align: center; margin-bottom: 20px; width: 100%; min-height: 150px; }
+        
+        .brand-logo { 
+            max-width: 450px; height: auto; display: block; margin: 0 auto;
         }
 
         #calendar {
-            width: 90%;
-            max-width: 1200px;
-            background: #1e1e1e;
-            padding: 30px;
-            border-radius: 40px;
-            /* SWAPPED: Now using the Blue for the main border to stop the 'Neon' look */
-            border: 8px solid var(--pg-blue);
-            box-shadow: 0 0 40px rgba(0, 181, 241, 0.2);
+            width: 90%; max-width: 1200px; background: #1e1e1e; padding: 30px;
+            border-radius: 40px; border: 10px solid var(--pg-blue);
+            box-shadow: 0 0 50px rgba(0, 181, 241, 0.2);
         }
 
-        /* Styling for a Professional Lobby Look */
-        .fc-toolbar-title { 
-            color: white !important; 
-            font-size: 2.5rem !important; 
-            font-weight: 800 !important;
-            text-transform: uppercase;
-        }
-
-        /* Day Headers use the Green subtly */
-        .fc-list-day-cushion {
-            background: rgba(158, 179, 39, 0.2) !important; 
-        }
-
-        .fc-list-day-text { 
-            color: var(--pg-green) !important; 
-            font-size: 2rem !important; 
-            font-weight: bold;
-        }
-
-        /* Event Titles use the Proud Ground Red */
-        .fc-list-event-title { 
-            font-size: 2.2rem !important; 
-            font-weight: 700 !important;
+        /* Force Red Titles */
+        .fc-list-event-title, .fc-list-event-title a { 
             color: var(--pg-red) !important; 
-            padding: 15px 0 !important;
+            font-size: 2.2rem !important; 
+            font-weight: 800 !important;
+            text-decoration: none !important;
         }
 
-        .fc-list-event-time { 
-            color: var(--pg-blue) !important; 
-            font-size: 1.6rem !important;
-            font-weight: bold;
-        }
-
-        .fc-header-toolbar { margin-bottom: 2rem !important; }
+        .fc-list-day-text { color: var(--pg-green) !important; font-size: 2rem !important; }
+        .fc-list-event-time { color: var(--pg-blue) !important; font-size: 1.5rem !important; }
         .fc-button { display: none !important; }
-        .fc-list-empty { font-size: 2rem; color: #666; padding: 100px; text-align: center; }
-        
-        #loading { color: var(--pg-blue); font-size: 1.5rem; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <div class="brand-header">
-        <img src="PG_logo_rgb_web.webp" alt="Proud Ground" class="brand-logo">
+        <img src="PG_logo_rgb_web.webp" alt="Proud Ground Logo" class="brand-logo" id="mainLogo">
     </div>
 
     <div id="calendar"></div>
-    <div id="loading">Updating Calendar...</div>
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
-        var loadingEl = document.getElementById('loading');
-
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'listWeek',
           headerToolbar: { left: 'title', center: '', right: '' },
@@ -109,11 +64,8 @@
             url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_0d1e206c2e1aef57a2de77dd7e1123b152fe3804e6dcdb5dd04c102a48f51604%40group.calendar.google.com/public/basic.ics'),
             format: 'ics'
           },
-          loading: function(isLoading) {
-            if (!isLoading) { loadingEl.style.display = 'none'; }
-          }
+          noEventsContent: 'No upcoming public events. Check Google Calendar privacy settings.'
         });
-
         calendar.render();
       });
     </script>
