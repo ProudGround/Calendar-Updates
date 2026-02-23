@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Proud Ground Lobby</title>
+    <title>Proud Ground Lobby Display</title>
     
     <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
@@ -10,40 +10,82 @@
     
     <style>
         :root {
-            --pg-red: #BA2026;   
-            --pg-blue: #00B5F1;  
-            --pg-green: #C3DA3E; 
+            /* Exact Proud Ground Colors */
+            --pg-red: #BA2026;   /* Roof Red */
+            --pg-blue: #00B5F1;  /* House Blue */
+            --pg-green: #9EB327; /* Toned-down Sunray Green */
             --bg-dark: #121212;
         }
 
         body { 
             background-color: var(--bg-dark); 
             color: white; 
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
             margin: 0; padding: 20px;
             display: flex; flex-direction: column; align-items: center;
             height: 100vh; overflow: hidden;
         }
 
-        .brand-header { text-align: center; margin-bottom: 20px; }
-        .brand-logo { max-width: 400px; height: auto; }
-
-        #calendar {
-            width: 90%; max-width: 1200px;
-            background: #1e1e1e; padding: 30px;
-            border-radius: 40px;
-            border: 10px solid var(--pg-green);
-            box-shadow: 0 0 50px rgba(195, 218, 62, 0.3);
+        .brand-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-top: 20px;
         }
 
-        .fc-toolbar-title { color: var(--pg-red) !important; font-size: 2.5rem !important; font-weight: 800 !important; text-transform: uppercase; }
-        .fc-list-day-text { color: var(--pg-blue) !important; font-size: 2.2rem !important; }
-        .fc-list-day-side-text { color: var(--pg-green) !important; font-size: 1.5rem !important; }
-        .fc-list-event-title { font-size: 1.8rem !important; color: white !important; }
-        .fc-list-event-time { color: var(--pg-blue) !important; font-size: 1.4rem !important; }
-        
-        #loading { color: var(--pg-green); font-size: 1.5rem; margin-top: 20px; }
+        .brand-logo {
+            max-width: 450px;
+            height: auto;
+        }
+
+        #calendar {
+            width: 90%;
+            max-width: 1200px;
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 40px;
+            /* SWAPPED: Now using the Blue for the main border to stop the 'Neon' look */
+            border: 8px solid var(--pg-blue);
+            box-shadow: 0 0 40px rgba(0, 181, 241, 0.2);
+        }
+
+        /* Styling for a Professional Lobby Look */
+        .fc-toolbar-title { 
+            color: white !important; 
+            font-size: 2.5rem !important; 
+            font-weight: 800 !important;
+            text-transform: uppercase;
+        }
+
+        /* Day Headers use the Green subtly */
+        .fc-list-day-cushion {
+            background: rgba(158, 179, 39, 0.2) !important; 
+        }
+
+        .fc-list-day-text { 
+            color: var(--pg-green) !important; 
+            font-size: 2rem !important; 
+            font-weight: bold;
+        }
+
+        /* Event Titles use the Proud Ground Red */
+        .fc-list-event-title { 
+            font-size: 2.2rem !important; 
+            font-weight: 700 !important;
+            color: var(--pg-red) !important; 
+            padding: 15px 0 !important;
+        }
+
+        .fc-list-event-time { 
+            color: var(--pg-blue) !important; 
+            font-size: 1.6rem !important;
+            font-weight: bold;
+        }
+
+        .fc-header-toolbar { margin-bottom: 2rem !important; }
         .fc-button { display: none !important; }
+        .fc-list-empty { font-size: 2rem; color: #666; padding: 100px; text-align: center; }
+        
+        #loading { color: var(--pg-blue); font-size: 1.5rem; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -53,7 +95,7 @@
     </div>
 
     <div id="calendar"></div>
-    <div id="loading">Connecting to Proud Ground Calendar...</div>
+    <div id="loading">Updating Calendar...</div>
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -69,8 +111,7 @@
           },
           loading: function(isLoading) {
             if (!isLoading) { loadingEl.style.display = 'none'; }
-          },
-          noEventsContent: 'No events scheduled for this week.'
+          }
         });
 
         calendar.render();
