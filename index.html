@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proud Ground Lobby</title>
     
     <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
@@ -37,27 +36,24 @@
             box-shadow: 0 0 50px rgba(195, 218, 62, 0.3);
         }
 
-        /* Branding Styles */
         .fc-toolbar-title { color: var(--pg-red) !important; font-size: 2.5rem !important; font-weight: 800 !important; text-transform: uppercase; }
         .fc-list-day-text { color: var(--pg-blue) !important; font-size: 2.2rem !important; }
         .fc-list-day-side-text { color: var(--pg-green) !important; font-size: 1.5rem !important; }
-        .fc-list-event-title { font-size: 1.8rem !important; font-weight: 600 !important; color: white !important; }
+        .fc-list-event-title { font-size: 1.8rem !important; color: white !important; }
         .fc-list-event-time { color: var(--pg-blue) !important; font-size: 1.4rem !important; }
         
-        /* Loading Indicator */
-        #loading { color: var(--pg-green); font-size: 1.5rem; position: absolute; top: 50%; }
-
+        #loading { color: var(--pg-green); font-size: 1.5rem; margin-top: 20px; }
         .fc-button { display: none !important; }
     </style>
 </head>
 <body>
 
     <div class="brand-header">
-        <img src="PG_logo_rgb_web.webp" alt="Proud Ground" class="brand-logo" onerror="this.style.display='none'">
+        <img src="PG_logo_rgb_web.webp" alt="Proud Ground" class="brand-logo">
     </div>
 
-    <div id="loading">Loading Proud Ground Calendar...</div>
     <div id="calendar"></div>
+    <div id="loading">Connecting to Proud Ground Calendar...</div>
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -71,11 +67,10 @@
             url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_0d1e206c2e1aef57a2de77dd7e1123b152fe3804e6dcdb5dd04c102a48f51604%40group.calendar.google.com/public/basic.ics'),
             format: 'ics'
           },
-          // Hide loading text once data arrives
           loading: function(isLoading) {
             if (!isLoading) { loadingEl.style.display = 'none'; }
           },
-          noEventsContent: 'Check back soon for upcoming events!'
+          noEventsContent: 'No events scheduled for this week.'
         });
 
         calendar.render();
