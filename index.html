@@ -9,36 +9,35 @@
     
     <style>
         :root {
-            --pg-red: #BC3433;
-            --pg-blue: #00B5F1;
-            --pg-green: #C3DA3E;
-            --bg-dark: #121212;
+            /* Exact Proud Ground Palette */
+            --pg-red: #BA2026;   /* Roof and Text */
+            --pg-blue: #00B5F1;  /* House Side */
+            --pg-green: #C3DA3E; /* Sunrays */
+            --bg-dark: #121212;  /* High-contrast backdrop */
         }
 
         body { 
             background-color: var(--bg-dark); 
             color: white; 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
         }
 
-        /* Lobby Header */
-        .lobby-header {
+        /* The Branded Header */
+        .brand-header {
             text-align: center;
             margin-bottom: 20px;
+            padding-top: 15px;
         }
-        .lobby-header h1 {
-            color: var(--pg-red);
-            font-size: 3rem;
-            margin: 10px 0;
-            text-transform: uppercase;
-            letter-spacing: 4px;
+
+        .brand-logo {
+            max-width: 450px; /* Sized for visibility on a lobby monitor */
+            height: auto;
         }
 
         #calendar {
@@ -47,34 +46,59 @@
             background: #1e1e1e;
             padding: 30px;
             border-radius: 40px;
-            border: 8px solid var(--pg-green);
-            box-shadow: 0 0 50px rgba(195, 218, 62, 0.2);
-            animation: border-pulse 4s infinite;
+            /* This is the "Pop" - A solid Sunray Green border */
+            border: 10px solid var(--pg-green);
+            box-shadow: 0 0 40px rgba(195, 218, 62, 0.2);
         }
 
-        @keyframes border-pulse {
-            0% { border-color: var(--pg-green); box-shadow: 0 0 20px rgba(195, 218, 62, 0.2); }
-            50% { border-color: #d8e685; box-shadow: 0 0 60px rgba(195, 218, 62, 0.5); }
-            100% { border-color: var(--pg-green); box-shadow: 0 0 20px rgba(195, 218, 62, 0.2); }
+        /* Styling the Text to Pop */
+        .fc-toolbar-title { 
+            color: var(--pg-red) !important; 
+            font-size: 2.8rem !important; 
+            font-weight: 900 !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Calendar Styling */
-        .fc-toolbar-title { color: white !important; font-size: 2.5rem !important; }
-        .fc-list-day-text { color: var(--pg-blue) !important; font-size: 2rem !important; }
-        .fc-list-day-side-text { color: var(--pg-green) !important; font-size: 1.5rem !important; }
-        .fc-list-event-title { font-size: 1.8rem !important; font-weight: bold !important; color: white !important; }
-        .fc-list-event-time { color: var(--pg-blue) !important; font-size: 1.4rem !important; }
-        
-        /* Clean UI */
+        .fc-list-day-text { 
+            color: var(--pg-blue) !important; 
+            font-size: 2.4rem !important; 
+            font-weight: bold;
+        }
+
+        .fc-list-day-side-text { 
+            color: var(--pg-green) !important; 
+            font-size: 1.6rem !important;
+            text-transform: uppercase;
+        }
+
+        .fc-list-event-title { 
+            font-size: 2rem !important; 
+            font-weight: 600 !important;
+            padding: 15px 0 !important;
+        }
+
+        .fc-list-event-time { 
+            color: var(--pg-blue) !important; 
+            font-size: 1.6rem !important;
+            font-weight: bold;
+        }
+
+        /* Hide standard buttons for a clean kiosk look */
         .fc-header-toolbar { margin-bottom: 2rem !important; }
         .fc-button { display: none !important; }
-        .fc-list-empty { font-size: 2rem; color: #666; padding: 50px; }
+        .fc-list-empty { font-size: 2rem; color: #888; padding: 100px; text-align: center; }
+        
+        /* Subtle animation to keep the screen from looking static */
+        .fc-list-event:hover {
+            background-color: rgba(0, 181, 241, 0.1) !important;
+        }
     </style>
 </head>
 <body>
 
-    <div class="lobby-header">
-        <h1>PROUD GROUND</h1>
+    <div class="brand-header">
+        <img src="PG_logo_rgb_web.webp" alt="Proud Ground Logo" class="brand-logo">
     </div>
 
     <div id="calendar"></div>
@@ -85,18 +109,18 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'listWeek',
           headerToolbar: { left: 'title', center: '', right: '' },
-          // YOUR REAL CALENDAR DATA
+          // PULLS YOUR LIVE DATA
           events: {
             url: 'https://corsproxy.io/?' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_0d1e206c2e1aef57a2de77dd7e1123b152fe3804e6dcdb5dd04c102a48f51604%40group.calendar.google.com/public/basic.ics'),
             format: 'ics'
           },
-          height: '80vh',
-          noEventsContent: 'No events scheduled for this week.'
+          height: '70vh',
+          noEventsContent: 'No upcoming Proud Ground events today.'
         });
         calendar.render();
         
-        // Refresh the page every 30 minutes to stay updated
-        setTimeout(function(){ location.reload(); }, 1800000);
+        // Refresh every 20 minutes so you never have to manually touch it
+        setInterval(function(){ location.reload(); }, 1200000);
       });
     </script>
 </body>
