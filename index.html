@@ -13,62 +13,47 @@
             --pg-red: #BA2026;   
             --pg-blue: #00B5F1;  
             --pg-green: #9EB327; 
-            --bg-dark: #121212;
+            --bg-page: #FFFFFF; 
         }
 
         body { 
-            background-color: var(--bg-dark); 
-            color: white; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-page); 
+            font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0; padding: 20px;
             display: flex; flex-direction: column; align-items: center;
-            height: 100vh; overflow: hidden;
         }
 
-        .brand-header { text-align: center; margin-bottom: 20px; width: 100%; }
+        .brand-header { text-align: center; margin-bottom: 30px; width: 100%; }
         
-        /* Logo Sizing */
+        /* LOGO REFERENCE FIXED: Exactly PG_LoGo1_rgb_web.webp */
         .brand-logo { 
-            max-width: 400px; 
+            max-width: 500px; 
             height: auto; 
             display: block; 
-            margin: 0 auto;
+            margin: 0 auto; 
         }
 
         #calendar {
-            width: 90%;
-            max-width: 1200px;
-            background: #1e1e1e;
-            padding: 30px;
-            border-radius: 40px;
-            border: 10px solid var(--pg-blue); /* Branded Blue Border */
-            box-shadow: 0 0 50px rgba(0, 181, 241, 0.2);
+            width: 95%; max-width: 1300px;
+            background: white; padding: 25px;
+            border-radius: 15px;
+            border: 12px solid var(--pg-blue); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
-        /* RED TITLES: This forces the event names to be Proud Ground Red */
-        .fc-list-event-title, .fc-list-event-title a { 
-            color: var(--pg-red) !important; 
-            font-size: 2.2rem !important; 
-            font-weight: 800 !important;
-            text-decoration: none !important;
-        }
-
-        /* Day Headers: Proud Ground Green */
-        .fc-list-day-cushion { background: rgba(158, 179, 39, 0.1) !important; }
-        .fc-list-day-text { color: var(--pg-green) !important; font-size: 2rem !important; font-weight: bold; }
-        
-        /* Time: Proud Ground Blue */
-        .fc-list-event-time { color: var(--pg-blue) !important; font-size: 1.5rem !important; font-weight: bold; }
-        
-        .fc-toolbar-title { color: white !important; font-size: 2.5rem !important; text-transform: uppercase; }
+        /* Branding Styles for Visibility */
+        .fc-toolbar-title { color: var(--pg-blue) !important; font-size: 3rem !important; font-weight: 800 !important; }
+        .fc-list-day-cushion { background-color: var(--pg-green) !important; }
+        .fc-list-day-text, .fc-list-day-side-text { color: white !important; font-size: 2.2rem !important; font-weight: bold; }
+        .fc-list-event-title, .fc-list-event-title a { color: var(--pg-red) !important; font-size: 2.5rem !important; font-weight: 900 !important; text-decoration: none !important; }
+        .fc-list-event-time { color: var(--pg-blue) !important; font-size: 1.8rem !important; font-weight: bold; }
         .fc-button { display: none !important; }
-        .fc-list-empty { font-size: 2rem; color: #666; padding: 100px; text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="brand-header">
-        <img src="PG_logo_rgb_web.webp" alt="Proud Ground Logo" class="brand-logo">
+        <img src="PG_LoGo1_rgb_web.webp" alt="Proud Ground Logo" class="brand-logo">
     </div>
 
     <div id="calendar"></div>
@@ -76,30 +61,15 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
-
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'listWeek',
           headerToolbar: { left: 'title', center: '', right: '' },
-          
-          // INTEGRATING ALL 3 CALENDARS
           eventSources: [
-            {
-              url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_0d1e206c2e1aef57a2de77dd7e1123b152fe3804e6dcdb5dd04c102a48f51604%40group.calendar.google.com/public/basic.ics'),
-              format: 'ics'
-            },
-            {
-              url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_6e360e021bf1893e8c3b94a47777ba0fa4cd8dfdf80b293de80936f49f16c9e7%40group.calendar.google.com/public/basic.ics'),
-              format: 'ics'
-            },
-            {
-              url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/info%40proudground.org/public/basic.ics'),
-              format: 'ics'
-            }
-          ],
-          
-          noEventsContent: 'No upcoming public events. Please check the "Public" settings for all three calendars in Google Settings.'
+            { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_0d1e206c2e1aef57a2de77dd7e1123b152fe3804e6dcdb5dd04c102a48f51604%40group.calendar.google.com/public/basic.ics'), format: 'ics' },
+            { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_6e360e021bf1893e8c3b94a47777ba0fa4cd8dfdf80b293de80936f49f16c9e7%40group.calendar.google.com/public/basic.ics'), format: 'ics' },
+            { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/info%40proudground.org/public/basic.ics'), format: 'ics' }
+          ]
         });
-
         calendar.render();
       });
     </script>
