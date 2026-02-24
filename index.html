@@ -20,28 +20,17 @@
             background-color: var(--bg-page); 
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0; 
-            padding: 20px;
-            display: flex; 
-            justify-content: flex-start; /* Aligns calendar to the left/center */
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            padding: 40px;
+            /* Flexbox to keep everything side-by-side */
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
         }
 
-        /* NEW LOGO POSITION: Right side, midway down */
-        .brand-logo { 
-            position: fixed;
-            right: 40px; /* Distance from right edge */
-            top: 50%;
-            transform: translateY(-50%); /* Perfectly centers it vertically */
-            max-width: 250px; /* Smaller size so it doesn't get cut off */
-            height: auto;
-            z-index: 100;
-        }
-
-        #calendar-container {
-            width: 70%; /* Leaves room for the logo on the right */
-            margin-left: 40px;
+        #calendar-wrapper {
+            flex: 1; /* Takes up all available space on the left */
+            max-width: 75%; /* Leaves room for the logo */
         }
 
         #calendar {
@@ -52,7 +41,23 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
-        /* Typography & Visibility */
+        /* LOGO: Pinned to the right side, midway down */
+        .logo-container {
+            width: 20%; /* Dedicated space on the right */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 200px; /* Adjust this to move the logo up or down */
+        }
+
+        .brand-logo { 
+            width: 100%;
+            max-width: 300px; /* Larger than before, but constrained to the 20% width */
+            height: auto;
+        }
+
+        /* Branding Styles */
         .fc-toolbar-title { color: var(--pg-blue) !important; font-size: 2.5rem !important; font-weight: 800 !important; }
         .fc-list-day-cushion { background-color: var(--pg-green) !important; }
         .fc-list-day-text { color: white !important; font-size: 1.8rem !important; font-weight: bold; }
@@ -60,30 +65,43 @@
         .fc-list-event-time { color: var(--pg-blue) !important; font-size: 1.5rem !important; font-weight: bold; }
         
         .fc-button { display: none !important; }
+        .fc-list-empty { padding: 50px; text-align: center; font-size: 1.5rem; color: #666; }
     </style>
 </head>
 <body>
 
-    <img src="PG_LoGo1_rgb_web.webp" alt="Proud Ground Logo" class="brand-logo">
-
-    <div id="calendar-container">
+    <div id="calendar-wrapper">
         <div id="calendar"></div>
+    </div>
+
+    <div class="logo-container">
+        <img src="PG_LoGo1_rgb_web.webp" alt="Proud Ground Logo" class="brand-logo">
     </div>
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
-        var cb = "?cb=" + Date.now();
-
+        
+        // Removed the complex cache-buster to ensure the URL is clean
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'listMonth', 
           headerToolbar: { left: 'title', center: '', right: '' },
           eventSources: [
-            { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_0d1e206c2e1aef57a2de77dd7e1123b152fe3804e6dcdb5dd04c102a48f51604%40group.calendar.google.com/public/basic.ics' + cb), format: 'ics' },
-            { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_6e360e021bf1893e8c3b94a47777ba0fa4cd8dfdf80b293de80936f49f16c9e7%40group.calendar.google.com/public/basic.ics' + cb), format: 'ics' },
-            { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/info%40proudground.org/public/basic.ics' + cb), format: 'ics' }
+            { 
+              url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_0d1e206c2e1aef57a2de77dd7e1123b152fe3804e6dcdb5dd04c102a48f51604%40group.calendar.google.com/public/basic.ics'), 
+              format: 'ics' 
+            },
+            { 
+              url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_6e360e021bf1893e8c3b94a47777ba0fa4cd8dfdf80b293de80936f49f16c9e7%40group.calendar.google.com/public/basic.ics'), 
+              format: 'ics' 
+            },
+            { 
+              url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/info%40proudground.org/public/basic.ics'), 
+              format: 'ics' 
+            }
           ]
         });
+
         calendar.render();
       });
     </script>
