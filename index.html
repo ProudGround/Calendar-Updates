@@ -2,108 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Proud Ground Lobby Display</title>
-    
-    <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.10/index.global.min.js"></script>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proud Ground Lobby Calendar</title>
+
+    <meta http-equiv="refresh" content="900">
+
     <style>
-        :root {
-            --pg-red: #BA2026;   
-            --pg-blue: #00B5F1;  
-            --pg-green: #9EB327; 
-            --bg-page: #FFFFFF; 
+        /* This removes default white borders and hides messy scrollbars */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; 
+            background-color: #ffffff;
         }
 
-        body { 
-            background-color: var(--bg-page); 
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0; 
-            padding: 40px;
-            /* Flexbox to keep everything side-by-side */
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            justify-content: space-between;
+        /* This forces the Google Calendar to stretch exactly to the edges of the TV screen */
+        iframe {
+            width: 100vw !important;
+            height: 100vh !important;
+            border: none !important;
         }
-
-        #calendar-wrapper {
-            flex: 1; /* Takes up all available space on the left */
-            max-width: 75%; /* Leaves room for the logo */
-        }
-
-        #calendar {
-            background: white; 
-            padding: 20px;
-            border-radius: 15px;
-            border: 10px solid var(--pg-blue); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
-
-        /* LOGO: Pinned to the right side, midway down */
-        .logo-container {
-            width: 20%; /* Dedicated space on the right */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: sticky;
-            top: 200px; /* Adjust this to move the logo up or down */
-        }
-
-        .brand-logo { 
-            width: 100%;
-            max-width: 300px; /* Larger than before, but constrained to the 20% width */
-            height: auto;
-        }
-
-        /* Branding Styles */
-        .fc-toolbar-title { color: var(--pg-blue) !important; font-size: 2.5rem !important; font-weight: 800 !important; }
-        .fc-list-day-cushion { background-color: var(--pg-green) !important; }
-        .fc-list-day-text { color: white !important; font-size: 1.8rem !important; font-weight: bold; }
-        .fc-list-event-title, .fc-list-event-title a { color: var(--pg-red) !important; font-size: 2rem !important; font-weight: 900 !important; text-decoration: none !important; }
-        .fc-list-event-time { color: var(--pg-blue) !important; font-size: 1.5rem !important; font-weight: bold; }
-        
-        .fc-button { display: none !important; }
-        .fc-list-empty { padding: 50px; text-align: center; font-size: 1.5rem; color: #666; }
     </style>
 </head>
 <body>
 
-    <div id="calendar-wrapper">
-        <div id="calendar"></div>
-    </div>
+    <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showNav=0&src=aW5mb0Bwcm91ZGdyb3VuZC5vcmc&src=Y183ODM0OTFiZWIwYzFkMTUxYzlkMDRmMDVlNzlhN2ZlOTFhOWE3MWZlYmE1MzExM2Y4ZjgzZjRlNDIwMWU1ZDJkQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=cHJvdWRncm91bmQub3JnXzM2MzkzODM1MzAzNzMzMzIzMTM1MzZAcmVzb3VyY2UuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23C83938&color=%2300B2E2&color=%23616161&color=%23B5D334" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 
-    <div class="logo-container">
-        <img src="PG_LoGo1_rgb_web.webp" alt="Proud Ground Logo" class="brand-logo">
-    </div>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        
-        // Removed the complex cache-buster to ensure the URL is clean
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'listMonth', 
-          headerToolbar: { left: 'title', center: '', right: '' },
-          eventSources: [
-            { 
-              url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_0d1e206c2e1aef57a2de77dd7e1123b152fe3804e6dcdb5dd04c102a48f51604%40group.calendar.google.com/public/basic.ics'), 
-              format: 'ics' 
-            },
-            { 
-              url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/c_6e360e021bf1893e8c3b94a47777ba0fa4cd8dfdf80b293de80936f49f16c9e7%40group.calendar.google.com/public/basic.ics'), 
-              format: 'ics' 
-            },
-            { 
-              url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.google.com/calendar/ical/info%40proudground.org/public/basic.ics'), 
-              format: 'ics' 
-            }
-          ]
-        });
-
-        calendar.render();
-      });
-    </script>
 </body>
 </html>
