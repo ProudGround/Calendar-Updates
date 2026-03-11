@@ -8,26 +8,57 @@
     <meta http-equiv="refresh" content="900">
 
     <style>
-        /* This removes default white borders and hides messy scrollbars */
+        /* Removes borders, hides scrollbars, and sets up a flexible layout */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             overflow: hidden; 
             background-color: #ffffff;
+            display: flex;
+            flex-direction: column; /* Stacks the logo and calendar vertically */
+            font-family: sans-serif;
         }
 
-        /* This forces the Google Calendar to stretch exactly to the edges of the TV screen */
+        /* Creates a crisp, white header for the logo at the top of the TV */
+        .header {
+            height: 130px; 
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centers the logo perfectly */
+            background-color: #ffffff;
+            border-bottom: 5px solid #C83938; /* Proud Ground Red accent line */
+        }
+
+        /* Sizes the logo so it doesn't get distorted */
+        .header img {
+            max-height: 100px;
+            width: auto;
+        }
+
+        /* Forces the calendar to fill the rest of the screen below the logo */
+        .calendar-container {
+            flex-grow: 1; 
+            width: 100vw;
+        }
+
+        /* Overrides the iframe width/height to make it stretch */
         iframe {
-            width: 100vw !important;
-            height: 100vh !important;
+            width: 100% !important;
+            height: 100% !important;
             border: none !important;
         }
     </style>
 </head>
 <body>
 
-    <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showNav=0&src=aW5mb0Bwcm91ZGdyb3VuZC5vcmc&src=Y183ODM0OTFiZWIwYzFkMTUxYzlkMDRmMDVlNzlhN2ZlOTFhOWE3MWZlYmE1MzExM2Y4ZjgzZjRlNDIwMWU1ZDJkQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=cHJvdWRncm91bmQub3JnXzM2MzkzODM1MzAzNzMzMzIzMTM1MzZAcmVzb3VyY2UuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23C83938&color=%2300B2E2&color=%23616161&color=%23B5D334" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    <div class="header">
+        <img src="PG_LoGo1_rgb_web.webp" alt="Proud Ground Logo">
+    </div>
+
+    <div class="calendar-container">
+        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showNav=0&showCalendars=0&mode=WEEK&showTabs=0&title=Conference%20Room%201%20%26%202&src=cHJvdWRncm91bmQub3JnXzM2MzkzODM1MzAzNzMzMzIzMTM1MzZAcmVzb3VyY2UuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=Y18xODg4bjBsMDdmdHBnanEzbWo5OG1kbXNpZ2Nub0ByZXNvdXJjZS5jYWxlbmRhci5nb29nbGUuY29t&color=%2300B2E2&color=%23B5D334" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    </div>
 
 </body>
 </html>
